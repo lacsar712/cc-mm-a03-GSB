@@ -9,14 +9,17 @@
     main { max-width: 760px; margin: 20px auto; padding: 0 12px; }
     input, button { padding: 8px; margin-right: 8px; }
     .alarm { color: #fca5a5; } .ok { color: #86efac; }
-    #live { min-height: 1.4em; }
+    #live, #board-msg { min-height: 1.4em; }
     table { width: 100%; border-collapse: collapse; }
     td, th { border-bottom: 1px solid #57534e; padding: 6px; text-align: left; }
+    h3 { margin-bottom: 6px; }
   </style>
 </head>
 <body>
   <header>
     <strong>矿井瓦斯班测台</strong>
+    <button id="nav-main" hidden>班测列表</button>
+    <button id="nav-board" hidden>催办榜</button>
     <span id="who"></span>
     <button id="out" hidden>退出</button>
   </header>
@@ -28,7 +31,7 @@
       <button id="go">登录</button>
       <p>gasman / gas123456 可上报；viewer / view123456 只能看</p>
     </section>
-    <section id="app" hidden>
+    <section id="view-main" hidden>
       <p id="live">等待推送</p>
       <form id="form">
         <input id="site" placeholder="测点" />
@@ -36,6 +39,24 @@
         <button>上报</button>
       </form>
       <table><thead><tr><th>测点</th><th>甲烷 %</th><th>状态</th><th>说明</th></tr></thead><tbody id="rows"></tbody></table>
+    </section>
+    <section id="view-board" hidden>
+      <p>报警班测须在 <span id="th"></span> 分钟内确认，超时未确认的测点进催办榜。</p>
+      <form id="th-form" hidden>
+        <input id="th-input" type="number" min="0" step="1" placeholder="分钟" />
+        <button>保存时限</button>
+      </form>
+      <p id="board-msg"></p>
+      <h3>催办榜</h3>
+      <table>
+        <thead><tr><th>测点</th><th>进榜时间</th><th>待确认</th><th id="op-head">操作</th></tr></thead>
+        <tbody id="board-rows"></tbody>
+      </table>
+      <h3>催办大事记</h3>
+      <table>
+        <thead><tr><th>测点</th><th>进榜时间</th><th>状态</th><th>处置简述</th><th>确认人</th><th>确认时间</th></tr></thead>
+        <tbody id="event-rows"></tbody>
+      </table>
     </section>
   </main>
   <script src="/app.js"></script>
